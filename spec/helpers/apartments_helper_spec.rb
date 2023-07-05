@@ -1,34 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe "Apartments", type: :request do
-  let(:user) { User.create(
-    email: 'test@example.com',
-    password: 'password',
-    password_confirmation: 'password'
-    )
-  }
-
-  describe "GET /index" do
-    it 'gets a list of apartments' do
-      apartment = user.apartments.create(
-        street: '4 Privet Drive',
-        unit: '2A',
-        city: 'Little Whinging',
-        state: 'Surrey',
-        square_footage: 2000,
-        price: '2000',
-        bedrooms: 3,
-        bathrooms: 2,
-        pets: 'yes',
-        image: 'https://c8.alamy.com/comp/B0RJGE/small-bungalow-home-with-pathway-in-addlestone-surrey-uk-B0RJGE.jpg'
-      )
-      get '/apartments'
-
-      apartment = JSON.parse(response.body)
-      expect(response).to have_http_status(200)
-      expect(apartment.first['street']).to eq('4 Privet Drive')
-    end
-  end
-
-  # test for creating a new apartment will live here
+# Specs in this file have access to a helper object that includes
+# the ApartmentsHelper. For example:
+#
+# describe ApartmentsHelper do
+#   describe "string concat" do
+#     it "concats two strings with spaces" do
+#       expect(helper.concat_strings("this","that")).to eq("this that")
+#     end
+#   end
+# end
+RSpec.describe ApartmentsHelper, type: :helper do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
