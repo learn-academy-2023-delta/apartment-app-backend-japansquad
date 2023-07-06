@@ -108,4 +108,28 @@ RSpec.describe "Apartments", type: :request do
       expect(apartment.unit).to eq('999')
     end
   end
+
+  describe "DELETE /apartments/:id" do
+    it 'deletes an apartment' do
+      apartment = user.apartments.create(
+        street: 'Memory Lane',
+        unit: '777',
+        prefecture: 'Akita',
+        city: 'Daisen',
+        square_footage: 250,
+        price: 173.00,
+        bedrooms: 1,
+        bathrooms: 0.5,
+        pets: 'Dogs, Fish, Cats Allowed',
+        amenities: 'Air Conditioner, Bath and Toilet, Bidet',
+        image: 'https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089'
+      )
+
+      expect {
+        delete "/apartments/#{apartment.id}"
+      }.to change(Apartment, :count).by(-1)
+
+      expect(response).to have_http_status(200)
+    end
+  end
 end
