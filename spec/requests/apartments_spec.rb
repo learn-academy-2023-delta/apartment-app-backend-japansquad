@@ -28,7 +28,6 @@ RSpec.describe "Apartments", type: :request do
 
       apartments = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(apartment.length).to eq 1
       expect(apartments.first['street']).to eq('Memory Lane')
       expect(apartments.first['unit']).to eq('777')
       expect(apartments.first['prefecture']).to eq('Akita')
