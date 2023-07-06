@@ -26,20 +26,47 @@ RSpec.describe "Apartments", type: :request do
 
       get '/apartments'
 
-      apartments = JSON.parse(response.body)
+      apartment_response = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(Apartments.length).to eq 1
-      expect(apartments.first['street']).to eq('Memory Lane')
-      expect(apartments.first['unit']).to eq('777')
-      expect(apartments.first['prefecture']).to eq('Akita')
-      expect(apartments.first['city']).to eq('Daisen')
-      expect(apartments.first['square_footage']).to eq(250)
-      expect(apartments.first['price']).to eq(173.00)
-      expect(apartments.first['bedrooms']).to eq(1)
-      expect(apartments.first['bathrooms']).to eq(0.5)
-      expect(apartments.first['pets']).to eq('Dogs, Fish, Cats Allowed')
-      expect(apartments.first['amenities']).to eq('Air Conditioner, Bath and Toilet, Bidet')
-      expect(apartments.first['image']).to eq('https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089')
+      expect(apartment_response.length).to eq 1
+      expect(apartment_response.first['street']).to eq('Memory Lane')
+      expect(apartment_response.first['unit']).to eq('777')
+      expect(apartment_response.first['prefecture']).to eq('Akita')
+      expect(apartment_response.first['city']).to eq('Daisen')
+      expect(apartment_response.first['square_footage']).to eq(250)
+      expect(apartment_response.first['price']).to eq(173.00)
+      expect(apartment_response.first['bedrooms']).to eq(1)
+      expect(apartment_response.first['bathrooms']).to eq(0.5)
+      expect(apartment_response.first['pets']).to eq('Dogs, Fish, Cats Allowed')
+      expect(apartment_response.first['amenities']).to eq('Air Conditioner, Bath and Toilet, Bidet')
+      expect(apartment_response.first['image']).to eq('https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089')
+    end
+  end
+
+  describe "POST /create" do
+    it 'creates an apartment' do
+      apartment_params = {
+        street: 'James St',
+        unit: '68',
+        prefecture: 'Akita',
+        city: 'Daisen',
+        square_footage: 350,
+        price: 200.00,
+        bedrooms: 2,
+        bathrooms: 1.0,
+        pets: 'Dogs, Fish, Cats Allowed',
+        amenities: 'Air Conditioner, Bath and Toilet, Bidet',
+        image: 'https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089',
+        user_id: user.id,
+      }
+
+      post '/apartments', params: { apartment: apartment_params }
+
+      expect(response).to have_http_status(201)
+
+      apartment = Apartment.first
+
+      expect(apartment.street).to eq 'James St'
     end
   end
 end
