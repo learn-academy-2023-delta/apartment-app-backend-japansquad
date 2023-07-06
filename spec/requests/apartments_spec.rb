@@ -6,23 +6,39 @@ RSpec.describe "Apartments", type: :request do
     )
   }
 
-  describe "GET /index" do
+  describe "GET /apartments" do
     it 'gets a list of apartments' do
       apartment = user.apartments.create(
-        street: '4 Privet Drive',
-        unit: '2A',
-        city: 'Little Whinging',
-        state: 'Surrey',
-        square_footage: 2000,
-        price: '2000',
-        bedrooms: 3,
-        bathrooms: 2,
-        pets: 'yes',
-        image: 'https://c8.alamy.com/comp/B0RJGE/small-bungalow-home-with-pathway-in-addlestone-surrey-uk-B0RJGE.jpg'
+        {
+          street: 'Memory Lane',
+          unit: '777',
+          prefecture: 'Akita',
+          city: 'Daisen',
+          square_footage: 250,
+          price: 173.00,
+          bedrooms: 1,
+          bathrooms: 0.5,
+          pets: 'Dogs, Fish, Cats Allowed',
+          amenities: 'Air Conditioner, Bath and Toilet, Bidet',
+          image: 'https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089'
+        }
       )
+
       get '/apartments'
 
-      apartment = JSON.parse(response.body)
+      apartments = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(apartment.first['street']).to eq('4 Privet Drive')
+      expect(apartments.first['street']).to eq('Memory Lane')
+      expect(apartments.first['unit']).to eq('777')
+      expect(apartments.first['prefecture']).to eq('Akita')
+      expect(apartments.first['city']).to eq('Daisen')
+      expect(apartments.first['square_footage']).to eq(250)
+      expect(apartments.first['price']).to eq(173.00)
+      expect(apartments.first['bedrooms']).to eq(1)
+      expect(apartments.first['bathrooms']).to eq(0.5)
+      expect(apartments.first['pets']).to eq('Dogs, Fish, Cats Allowed')
+      expect(apartments.first['amenities']).to eq('Air Conditioner, Bath and Toilet, Bidet')
+      expect(apartments.first['image']).to eq('https://www.leopalace21.com/app/image/request?TABLE=LEO_IMAGE&IMAGE=IM_IMAGE&IM_BK_NO=17089')
     end
+  end
+end
